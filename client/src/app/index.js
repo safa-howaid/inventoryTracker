@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { NavBar } from "../components";
-import { ProductsList, ProductsInsert, ProductsUpdate, ShipmentsList, ShipmentsInsert } from "../pages";
+import { ProductsList, ProductsInsert, ProductsUpdate, ShipmentsList, ShipmentsInsert, Main } from "../pages";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -9,6 +9,7 @@ function App() {
     <Router>
       <NavBar />
       <Routes>
+        <Route path="/" exact element={<Main />} />
         <Route path="/products/" exact element={<ProductsList />} />
         <Route path="/products/create" exact element={<ProductsInsert />} />
         <Route path="/products/update/:id" exact element={<ProductsUpdate />} />
