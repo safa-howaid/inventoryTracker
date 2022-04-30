@@ -1,11 +1,23 @@
 const mongoose = require("mongoose");
 const faker = require("@faker-js/faker").faker;
 const Product = require("../models/product-model");
+require("dotenv").config();
+
 const DB_NAME = "onlineStore";
 
+const uri =
+  "mongodb+srv://" +
+  process.env["MONGO_PASSWORD"] +
+  ":" +
+  process.env["MONGO_PASSWORD"] +
+  "@inventorytracker.brkbr.mongodb.net/" +
+  DB_NAME +
+  "?retryWrites=true&w=majority";
+
+console.log(uri);
 const numOfProducts = 5;
 
-mongoose.connect("mongodb://127.0.0.1:27017/" + DB_NAME, { useNewUrlParser: true }).catch((e) => {
+mongoose.connect(uri, { useNewUrlParser: true }).catch((e) => {
   console.error("Connection error", e.message);
 });
 

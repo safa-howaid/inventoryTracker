@@ -57,9 +57,9 @@ class ShipmentCard extends Component {
         </CardBody>
         {this.props.shipment.products.length > 0 ? (
           <ul className="list-group list-group-flush" styles={{ overflowY: "scroll" }}>
-            {this.props.shipment.products.map((product) => {
+            {this.props.shipment.products.map((product, key) => {
               return (
-                <li className="list-group-item">
+                <li className="list-group-item" key={key}>
                   <a href={"/products#" + product.product_id}>
                     {product.quantity}x {product.product_name}
                   </a>
