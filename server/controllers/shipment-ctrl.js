@@ -54,46 +54,48 @@ const createShipment = (req, res) => {
 };
 
 const deleteShipment = async (req, res) => {
-  await Shipment.findOneAndDelete({ _id: req.params.id }, (err, shipment) => {
-    if (err) {
+  await Shipment.findOneAndDelete({ _id: req.params.id })
+    .then((shipment) => {
+      if (!shipment) {
+        return res.status(404).json({ success: false, error: `Shipment not found` });
+      }
+
+      return res.status(200).json({ success: true, data: shipment });
+    })
+    .catch((err) => {
+      console.log(err);
       return res.status(400).json({ success: false, error: err });
-    }
-
-    if (!shipment) {
-      return res.status(404).json({ success: false, error: `Shipment not found` });
-    }
-
-    return res.status(200).json({ success: true, data: shipment });
-  }).catch((err) => console.log(err));
+    });
 };
 
 const getShipmentById = async (req, res) => {
-  await Shipment.findOne({ _id: req.params.id }, (err, shipment) => {
-    if (err) {
-      return res.status(400).json({ success: false, error: err });
-    }
+  await Shipment.findOne({ _id: req.params.id })
+    .then((shipment) => {
+      if (!shipment) {
+        return res.status(404).json({ success: false, error: `Shipment not found` });
+      }
 
-    if (!shipment) {
-      return res.status(404).json({ success: false, error: `Shipment not found` });
-    }
-    return res.status(200).json({ success: true, data: shipment });
-  })
-    .clone()
-    .catch((err) => console.log(err));
+      return res.status(200).json({ success: true, data: shipment });
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.status(400).json({ success: false, error: err });
+    });
 };
 
 const getShipments = async (req, res) => {
-  await Shipment.find({}, (err, shipments) => {
-    if (err) {
+  await Shipment.find({})
+    .then((shipments) => {
+      if (!shipments.length) {
+        return res.status(404).json({ success: false, error: `Shipment not found` });
+      }
+
+      return res.status(200).json({ success: true, data: shipments });
+    })
+    .catch((err) => {
+      console.log(err);
       return res.status(400).json({ success: false, error: err });
-    }
-    if (!shipments.length) {
-      return res.status(404).json({ success: false, error: `Shipment not found` });
-    }
-    return res.status(200).json({ success: true, data: shipments });
-  })
-    .clone()
-    .catch((err) => console.log(err));
+    });
 };
 
 module.exports = {
