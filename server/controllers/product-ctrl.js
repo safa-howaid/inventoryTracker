@@ -1,6 +1,6 @@
 const Product = require("../models/product-model");
 
-createProduct = (req, res) => {
+const createProduct = (req, res) => {
   const body = req.body;
 
   if (!body) {
@@ -33,7 +33,7 @@ createProduct = (req, res) => {
     });
 };
 
-updateProduct = async (req, res) => {
+const updateProduct = async (req, res) => {
   const body = req.body;
 
   if (!body) {
@@ -44,7 +44,7 @@ updateProduct = async (req, res) => {
   }
 
   Product.findOne({ _id: req.params.id }, (err, product) => {
-    if (err) {
+    if (err || !product) {
       return res.status(404).json({
         err,
         message: "Product not found!",
@@ -74,7 +74,7 @@ updateProduct = async (req, res) => {
   });
 };
 
-deleteProduct = async (req, res) => {
+const deleteProduct = async (req, res) => {
   await Product.findOneAndDelete({ _id: req.params.id }, (err, product) => {
     if (err) {
       return res.status(400).json({ success: false, error: err });
@@ -88,7 +88,7 @@ deleteProduct = async (req, res) => {
   }).catch((err) => console.log(err));
 };
 
-getProductById = async (req, res) => {
+const getProductById = async (req, res) => {
   await Product.findOne({ _id: req.params.id }, (err, product) => {
     if (err) {
       return res.status(400).json({ success: false, error: err });
@@ -103,13 +103,13 @@ getProductById = async (req, res) => {
     .catch((err) => console.log(err));
 };
 
-getProducts = async (req, res) => {
+const getProducts = async (req, res) => {
   await Product.find({}, (err, products) => {
     if (err) {
       return res.status(400).json({ success: false, error: err });
     }
     if (!products.length) {
-      return res.status(404).json({ success: false, error: `Product not found` });
+      return res.status(404).json({ success: false, error: `Product list is empty` });
     }
     res.set("Access-Control-Allow-Origin", "*");
     return res.status(200).json({ success: true, data: products });

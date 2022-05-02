@@ -1,7 +1,7 @@
 const Shipment = require("../models/shipment-model");
 const Product = require("../models/product-model");
 
-createShipment = (req, res) => {
+const createShipment = (req, res) => {
   const body = req.body;
 
   if (!body) {
@@ -53,46 +53,7 @@ createShipment = (req, res) => {
     });
 };
 
-updateShipment = async (req, res) => {
-  const body = req.body;
-
-  if (!body) {
-    return res.status(400).json({
-      success: false,
-      error: "You must provide a body to update",
-    });
-  }
-
-  Shipment.findOne({ _id: req.params.id }, (err, shipment) => {
-    if (err) {
-      return res.status(404).json({
-        err,
-        message: "Shipment not found!",
-      });
-    }
-    shipment.firstName = body.firstName;
-    shipment.lastName = body.lastName;
-    shipment.address = body.address;
-    shipment.products = body.products;
-    shipment
-      .save()
-      .then(() => {
-        return res.status(200).json({
-          success: true,
-          id: shipment._id,
-          message: "Shipment updated!",
-        });
-      })
-      .catch((error) => {
-        return res.status(404).json({
-          error,
-          message: "Shipment not updated!",
-        });
-      });
-  });
-};
-
-deleteShipment = async (req, res) => {
+const deleteShipment = async (req, res) => {
   await Shipment.findOneAndDelete({ _id: req.params.id }, (err, shipment) => {
     if (err) {
       return res.status(400).json({ success: false, error: err });
@@ -106,7 +67,7 @@ deleteShipment = async (req, res) => {
   }).catch((err) => console.log(err));
 };
 
-getShipmentById = async (req, res) => {
+const getShipmentById = async (req, res) => {
   await Shipment.findOne({ _id: req.params.id }, (err, shipment) => {
     if (err) {
       return res.status(400).json({ success: false, error: err });
@@ -121,7 +82,7 @@ getShipmentById = async (req, res) => {
     .catch((err) => console.log(err));
 };
 
-getShipments = async (req, res) => {
+const getShipments = async (req, res) => {
   await Shipment.find({}, (err, shipments) => {
     if (err) {
       return res.status(400).json({ success: false, error: err });
@@ -137,7 +98,6 @@ getShipments = async (req, res) => {
 
 module.exports = {
   createShipment,
-  updateShipment,
   deleteShipment,
   getShipments,
   getShipmentById,
