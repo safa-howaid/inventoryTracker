@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://inventory-tracker-web.herokuapp.com/api",
+  baseURL: "http://localhost:8000/api",
 });
 
 export const insertProduct = (payload) => api.post(`/product`, payload);
