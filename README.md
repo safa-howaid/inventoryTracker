@@ -6,7 +6,13 @@ This web applicaiton was built with a NodeJS and Express backend using a MongoDB
 
 ## To Run Locally
 
-Run the following to start the server:
+NOTE: Ensure that you have the Node and NPM installed
+Run the following to install server dependencies:
+
+- `cd server`
+- `npm install`
+
+  Run the following to start the server:
 
 - `cd server`
 - `npm run start`
