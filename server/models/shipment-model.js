@@ -7,7 +7,13 @@ const Shipment = new Schema(
     lastName: { type: String, required: true },
     address: { type: String, required: true },
     products: {
-      type: [{ product_id: { type: Schema.Types.ObjectId, ref: "Product" }, quantity: Number, product_name: String }],
+      type: [
+        {
+          product_id: { type: Schema.Types.ObjectId, ref: "Product" },
+          quantity: { type: Number, minimum: 0 },
+          product_name: String,
+        },
+      ],
       required: true,
       validate: (p) => Array.isArray(p) && p.length > 0,
     },
